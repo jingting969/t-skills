@@ -4,6 +4,7 @@
   "description": "t-skills 个人成长技能箱。服务于创业、思考、人生成长、自媒体创作等真实场景，用博弈论、决策科学等框架帮你做出更优决策。",
   "skills": [
     "./skills/t-game-thinking",
-    "./skills/t-handoff"
+    "./skills/t-handoff",
+    "./skills/t-productize-you"
   ]
 }

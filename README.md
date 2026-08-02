@@ -60,6 +60,7 @@ npx -y skills add jingting969/t-skills -g --all
 | Skill | 做什么 | 触发方式 |
 | --- | --- | --- |
 | `t-handoff` | 对话交接。把当前对话压缩成交接文档，让另一个 agent 无缝接手继续工作 | `Use Skill: t-handoff` |
+| `t-productize-you` | 能力产品化。把经历和能力转成可试卖的咨询、课程、陪跑产品，含三级定价和销售验证方案 | `Use Skill: t-productize-you` |
 
 ### 技能之间的关系
 
@@ -67,6 +68,8 @@ npx -y skills add jingting969/t-skills -g --all
 t-game-thinking（分析博弈局面）
  ↓
 t-handoff（把分析结论交接给下一个 agent 继续工作）
+ ↓
+t-productize-you（把能力转成可试卖产品，验证能不能卖）
 ```
 
 t-game-thinking 分析完一个博弈场景后，如果需要换一个会话继续深入，可以用 t-handoff 把当前分析结论和上下文打包成交接文档，新会话打开即可接上。

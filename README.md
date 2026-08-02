@@ -1,6 +1,6 @@
 # t-skills
 
-个人成长技能箱。把博弈论、决策科学等方法论做成 Agent skill，服务于创业、思考、人生成长、自媒体创作等真实场景。
+净霆的创业工具箱，服务于创业、思考、决策、自媒体创作等真实场景。
 
 可在 Claude Code、Codex、Cursor、Trae Solo 等任意支持 skill / system prompt 的 Agent 上使用。
 

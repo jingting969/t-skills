@@ -1,19 +1,14 @@
 # t-skills
 
-思维工具箱。用博弈论、决策科学等框架拆解真实场景，做成 Agent skill。
+思维工具箱。把博弈论、决策科学等方法论做成 Agent skill，帮你在真实场景中做出更优决策。
 
 可在 Claude Code、Codex、Cursor、Trae Solo 等任意支持 skill / system prompt 的 Agent 上使用。
 
 **当前版本：v1.0.0**
 
-## 已有技能
+**所有内容开放，可以整套装，也可以只拿一部分。单个 skill 都能独立用。**
 
-| Skill | 做什么 | 触发方式 |
-| --- | --- | --- |
-| `t-game-thinking` | 博弈思考助手。用博弈论框架拆解冲突、谈判、竞争与决策场景，不适用于与挚爱至亲的日常相处 | `/t-game-thinking` |
-| `t-handoff` | 对话交接。把当前对话压缩成交接文档，让另一个 agent 无缝接手继续工作 | `Use Skill: t-handoff` |
-
-## 如何安装
+## 如何安装 t-skills
 
 #### Claude Code
 
@@ -30,9 +25,58 @@ npx -y skills add jingting969/t-skills -g --all
 
 #### Trae Solo
 
-从 [GitHub Releases](https://github.com/jingting969/t-skills/releases) 下载最新的 `t-skills-版本号.zip`，解压后里面是独立的 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
+Trae Solo 一个 zip 装一个 skill。从 [GitHub Releases](https://github.com/jingting969/t-skills/releases) 下载最新的 `t-skills-版本号.zip`，解压后里面是独立的 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
 
 如果想本地构建，运行 `bash tools/build-skills.sh`，产物在 `dist/skills/`。
+
+## 如何更新 t-skills
+
+#### Claude Code 插件市场安装的用户
+
+```
+claude plugin marketplace update t-skills
+claude plugin update t-skills
+/reload-plugins
+```
+
+#### 通过 `npx skills add` 安装的用户
+
+重新运行一次同样的命令即可。安装和更新用的是同一条命令，不需要换成别的写法。
+
+```
+npx -y skills add jingting969/t-skills -g --all
+```
+
+## 工具箱
+
+### 思维工具
+
+| Skill | 做什么 | 触发方式 |
+| --- | --- | --- |
+| `t-game-thinking` | 博弈思考助手。用博弈论框架拆解冲突、谈判、竞争与决策场景。不适用于与挚爱至亲的日常相处 | `/t-game-thinking` |
+
+### 工具
+
+| Skill | 做什么 | 触发方式 |
+| --- | --- | --- |
+| `t-handoff` | 对话交接。把当前对话压缩成交接文档，让另一个 agent 无缝接手继续工作 | `Use Skill: t-handoff` |
+
+### 技能之间的关系
+
+```
+t-game-thinking（分析博弈局面）
+ ↓
+t-handoff（把分析结论交接给下一个 agent 继续工作）
+```
+
+t-game-thinking 分析完一个博弈场景后，如果需要换一个会话继续深入，可以用 t-handoff 把当前分析结论和上下文打包成交接文档，新会话打开即可接上。
+
+## 设计理念
+
+1. **一个 skill 只做一件事**：每个 skill 聚焦一个思维工具，不混装。装一个用一个，不需要整套。
+2. **能用就行**：skill 的价值在于帮用户做决策，不在于展示理论。每个 skill 都有明确的执行流程和输出模板。
+3. **有边界**：每个 skill 都标注了"不适用"的场景。比如 t-game-thinking 明确说对挚爱至亲不博弈。
+4. **可组合**：skill 之间可以串联。博弈分析完交接给下一个 agent，各司其职。
 
 ## 项目结构
 
@@ -42,10 +86,11 @@ t-skills/
 │   └── plugin.json              # Claude Code 插件配置
 ├── skills/
 │   ├── t-game-thinking/
-│   │   └── SKILL.md             # 博弈思维技能
+│   │   └── SKILL.md             # 博弈思考助手
 │   └── t-handoff/
-│       ├── SKILL.md             # 对话交接技能
-│       └── agents/openai.yaml   # OpenAI agent 配置
+│       ├── SKILL.md             # 对话交接
+│       └── agents/
+│           └── openai.yaml      # OpenAI agent 配置
 ├── tools/
 │   └── build-skills.sh          # 构建打包脚本
 ├── .gitignore
@@ -59,7 +104,7 @@ t-skills/
 1. 在 `skills/` 下创建新目录，命名为 `t-<skill-name>`
 2. 在目录内创建 `SKILL.md`，包含 YAML frontmatter（`name` + `description`）和 Markdown 正文
 3. 在 `.claude-plugin/plugin.json` 的 `skills` 数组中添加路径
-4. 如需可选子目录，支持 `templates/`、`scaffold/`、`docs/`、`tools/`、`scripts/`
+4. 如需可选子目录，支持 `templates/`、`scaffold/`、`docs/`、`tools/`、`scripts/`、`agents/`
 5. 运行 `bash tools/build-skills.sh` 验证构建
 
 ### SKILL.md 格式
@@ -70,8 +115,6 @@ name: "<skill-name>"
 description: |
   <技能做什么>。
   触发方式：<触发词和短语>
-  <English description>
-  Trigger: <English triggers>
 ---
 
 # <Skill Title>

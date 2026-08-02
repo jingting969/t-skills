@@ -21,6 +21,8 @@ group_for() {
   case "$1" in
     t-game-thinking)
       echo "思维工具" ;;
+    t-handoff)
+      echo "工具" ;;
     *)
       echo "未分组" ;;
   esac

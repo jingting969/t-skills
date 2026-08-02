@@ -11,6 +11,7 @@
 | Skill | 做什么 | 触发方式 |
 | --- | --- | --- |
 | `t-game-thinking` | 博弈思考助手。用博弈论框架拆解冲突、谈判、竞争与决策场景，不适用于与挚爱至亲的日常相处 | `/t-game-thinking` |
+| `t-handoff` | 对话交接。把当前对话压缩成交接文档，让另一个 agent 无缝接手继续工作 | `Use Skill: t-handoff` |
 
 ## 如何安装
 
@@ -40,8 +41,11 @@ t-skills/
 ├── .claude-plugin/
 │   └── plugin.json              # Claude Code 插件配置
 ├── skills/
-│   └── t-game-thinking/
-│       └── SKILL.md             # 博弈思维技能（YAML frontmatter + Markdown 正文）
+│   ├── t-game-thinking/
+│   │   └── SKILL.md             # 博弈思维技能
+│   └── t-handoff/
+│       ├── SKILL.md             # 对话交接技能
+│       └── agents/openai.yaml   # OpenAI agent 配置
 ├── tools/
 │   └── build-skills.sh          # 构建打包脚本
 ├── .gitignore

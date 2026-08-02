@@ -1,0 +1,8 @@
+.DS_Store
+dist/
+releases/
+*.zip
+__pycache__/
+*.pyc
+.obsidian/
+tests/

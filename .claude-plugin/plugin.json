@@ -1,0 +1,8 @@
+{
+  "name": "t-skills",
+  "displayName": "t-skills",
+  "description": "t-skills 思维工具箱。用博弈论、决策科学等框架拆解真实场景，帮助你在竞争、合作、谈判、投资等局面中做出更优决策。",
+  "skills": [
+    "./skills/t-game-thinking"
+  ]
+}

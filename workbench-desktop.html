@@ -49,7 +49,7 @@
     --drawer-active: rgba(244,243,240,.12);      /* 侧栏选中底 */
 
     /* ---- 背景图 ---- */
-    --greet-image: url("assets/greet-banner.jpg");  /* 首页 hero 背景图 */
+    --greet-image: none;  /* 首页 hero 背景图（待生成后替换为 url("assets/greet-banner.jpg")） */
     --page-texture: none;                            /* 页面纹理叠加（none 或 url(...)） */
 
     /* ---- 圆角（按组件角色，不要裸写数字） ---- */
@@ -548,29 +548,29 @@
    图标用 icon 字段（取自下方 ICONS 图标库，全部为单色线性图标）。
    ============================================================ */
 const CONFIG = {
-  storageKey: "workbench-desktop-v1",   // 换 key 可强制重置
-  owner: "我的工作台",                  // 侧栏顶部标题
-  slogan: "Personal Workbench",
+  storageKey: "workbench-creator-desktop-v1",   // 换 key 可强制重置
+  owner: "自媒体工作台",                  // 侧栏顶部标题
+  slogan: "Content Creator Workbench",
 
   // 每日一句（一周七天各一句，按星期轮换：周一→周日）
   quotes: [
-    "新的一周，从把最重要的一件事做好开始。",   // 周一
-    "保持节奏，稳一点也没关系。",                 // 周二
-    "把大目标拆小，今天只推进一步。",             // 周三
-    "坚持到一半时最难，也最值得。",               // 周四
-    "收个尾，给这一周一个交代。",                 // 周五
-    "允许自己慢下来，好好休息也是正事。",         // 周六
-    "复盘一下，为下一周留点方向。",               // 周日
+    "新的一周，先把这周要发的 3 条内容定下来。",   // 周一
+    "稳定输出比偶尔爆款更重要，保持节奏。",         // 周二
+    "今天的内容做完了吗？先完成再完美。",           // 周三
+    "拆解一个对标账号，比闷头做十条有用。",         // 周四
+    "周末复盘数据，找到能复用的爆款公式。",         // 周五
+    "休息也是创作的一部分，给大脑留点空白。",       // 周六
+    "复盘上周数据，调整下周内容方向。",             // 周日
   ],
 
   // 今日概览环形（value 为 0-100 的完成度，calc 返回 {value, sub}）
   overview: [
     { key:"todo", label:"今日计划", icon:"list", color:"var(--accent)",
       calc: d => { const it=d.todo||[]; const done=it.filter(x=>x.done).length; return { value: it.length?Math.round(done/it.length*100):0, sub:`${done}/${it.length} 项` }; } },
-    { key:"checkin", label:"打卡", icon:"leaf", color:"var(--module-1)",
+    { key:"checkin", label:"每日打卡", icon:"leaf", color:"var(--module-1)",
       calc: d => { const it=d.checkin||[]; const t=today(); const done=it.filter(x=>x.log&&x.log[t]).length; return { value: it.length?Math.round(done/it.length*100):0, sub:`${done}/${it.length} 项` }; } },
-    { key:"read", label:"阅读", icon:"book", color:"var(--module-2)", calc: d => avgProgress(d.read) },
-    { key:"sport", label:"运动", icon:"activity", color:"var(--module-3)", calc: d => avgProgress(d.sport) },
+    { key:"fans", label:"粉丝增长", icon:"target", color:"var(--module-2)", calc: d => avgProgress(d.fans) },
+    { key:"content", label:"内容产出", icon:"camera", color:"var(--module-3)", calc: d => avgProgress(d.content) },
   ],
 
   // 本周状态趋势（真实数据：读取用户填写的 __trend，7 个数字；没有就留空）
@@ -581,36 +581,42 @@ const CONFIG = {
 
   // 快速记录按钮（点了直接给对应模块新建）
   quickAdd: [
-    { label:"记运动", icon:"activity", module:"sport",   tint:"#f6f0e6", color:"var(--module-3)" },
+    { label:"记选题", icon:"pen",      module:"idea",    tint:"#f1eef4", color:"var(--module-5)" },
     { label:"记打卡", icon:"check",    module:"checkin", tint:"#eef3ec", color:"var(--module-1)" },
     { label:"记一笔", icon:"wallet",   module:"money",   tint:"#f6efe8", color:"var(--module-4)" },
-    { label:"记想法", icon:"pen",      module:"note",    tint:"#f1eef4", color:"var(--module-5)" },
+    { label:"拆爆款", icon:"flame",    module:"case",    tint:"#f6ece9", color:"var(--danger)" },
   ],
 
   // ============ 模块定义 ============
   modules: [
-    { key:"todo", name:"今日计划", icon:"list", tint:"#efeee8", color:"var(--accent)", type:"todo", desc:"任务清单与进度追踪",
-      priorities:[ {key:"P0",label:"重要",color:"#f6ece9",text:"#c25d4f"}, {key:"P1",label:"一般",color:"#f6efe6",text:"#bd8a4e"}, {key:"P2",label:"随手",color:"#eef2ec",text:"#6f8f6a"} ],
-      seed:[ {id:11,title:"完成英语核心词汇 30min",priority:"P0",done:false,note:"积累词汇量，稳步提升英语能力"},
-             {id:12,title:"发布 1 篇笔记 / 视频",priority:"P1",done:false,note:""},
-             {id:13,title:"整理今日工作纪要",priority:"P2",done:true,note:""} ] },
-    { key:"checkin", name:"习惯打卡", icon:"leaf", tint:"#eef3ec", color:"var(--module-1)", type:"checkin", desc:"补品·护肤·早睡等每日打卡",
-      seed:[ {id:21,title:"喝够 8 杯水",log:{}}, {id:22,title:"23:30 前睡觉",log:{}}, {id:23,title:"维生素 / 补品",log:{}} ] },
-    { key:"read", name:"阅读打卡", icon:"book", tint:"#edf1f5", color:"var(--module-2)", type:"progress", unit:"页", desc:"书籍进度·摘录·想法",
-      seed:[ {id:31,title:"《认知觉醒》",current:168,target:300,unit:"页",note:"第 7 章：习惯的复利，早晚各读 30 分钟"}, {id:32,title:"《原子习惯》",current:90,target:260,unit:"页",note:"聚焦身份认同的养成，做好读书笔记"} ] },
-    { key:"sport", name:"每日锻炼", icon:"activity", tint:"#f6f0e6", color:"var(--module-3)", type:"progress", unit:"分钟", desc:"游泳·跑步·力量训练",
-      seed:[ {id:41,title:"力量训练",current:12,target:20,unit:"分钟",note:"核心 + 上肢，组间休息 60 秒"}, {id:42,title:"跑步",current:30,target:40,unit:"分钟",note:"慢跑热身，配速 6 分半保持心率"} ] },
-    { key:"money", name:"记账本", icon:"wallet", tint:"#f6efe8", color:"var(--module-4)", type:"finance", desc:"收入·支出·分类·占比",
-      categories:["餐饮","交通","购物","居家","娱乐","工资","其他"],
-      seed:[ {id:51,title:"午餐",type:"expense",amount:32,category:"餐饮",date:isoToday()},
-             {id:52,title:"地铁",type:"expense",amount:6,category:"交通",date:isoToday()},
-             {id:53,title:"稿费",type:"income",amount:400,category:"工资",date:isoToday()} ] },
-    { key:"note", name:"心情日记", icon:"pen", tint:"#f1eef4", color:"var(--module-5)", type:"note", desc:"文字·摘录·心情记录",
-      moods:["开心","平静","低落","焦虑","疲惫"],
-      seed:[ {id:61,title:"今天的小确幸",content:"阳台的多肉冒出了新芽，顺手拍了张照片。",mood:"开心",date:isoToday()} ] },
-    { key:"hot", name:"今日热点", icon:"flame", tint:"#f6ece9", color:"var(--danger)", type:"note", desc:"热点内容·收藏·稍后阅读",
-      moods:["收藏","稍后读","已读"],
-      seed:[ {id:71,title:"AI 提示词技巧合集",content:"整理常用提示词模板，方便复用。",mood:"收藏",date:isoToday()} ] },
+    { key:"todo", name:"内容计划", icon:"list", tint:"#efeee8", color:"var(--accent)", type:"todo", desc:"选题·写稿·拍摄·剪辑·发布",
+      priorities:[ {key:"P0",label:"紧急",color:"#f6ece9",text:"#c25d4f"}, {key:"P1",label:"重要",color:"#f6efe6",text:"#bd8a4e"}, {key:"P2",label:"随手",color:"#eef2ec",text:"#6f8f6a"} ],
+      seed:[ {id:11,title:"确定本周 3 个选题",priority:"P0",done:false,note:"结合热点 + 账号定位，优先选有搜索量的"},
+             {id:12,title:"拍摄「新手做自媒体第一步」视频",priority:"P1",done:false,note:"下午光线好，2 点开拍"},
+             {id:13,title:"剪辑并发布 1 条短视频",priority:"P1",done:false,note:""},
+             {id:14,title:"回复评论区互动",priority:"P2",done:true,note:""} ] },
+    { key:"checkin", name:"每日打卡", icon:"leaf", tint:"#eef3ec", color:"var(--module-1)", type:"checkin", desc:"发帖·复盘·学习·互动",
+      seed:[ {id:21,title:"发布 1 条内容",log:{}}, {id:22,title:"复盘昨日数据",log:{}}, {id:23,title:"学习 30 分钟（对标/课程）",log:{}}, {id:24,title:"互动评论 15 分钟",log:{}} ] },
+    { key:"fans", name:"粉丝增长", icon:"target", tint:"#edf1f5", color:"var(--module-2)", type:"progress", unit:"人", desc:"各平台粉丝目标进度",
+      seed:[ {id:31,title:"抖音粉丝",current:8600,target:10000,unit:"人",note:"本月目标 1 万，差 1400，日均涨粉 47"},
+             {id:32,title:"小红书粉丝",current:3200,target:5000,unit:"人",note:"爆款笔记带量，持续输出干货"},
+             {id:33,title:"B站粉丝",current:1500,target:3000,unit:"人",note:"长视频为主，每周 1 更"} ] },
+    { key:"content", name:"内容产出", icon:"camera", tint:"#f6f0e6", color:"var(--module-3)", type:"progress", unit:"条", desc:"本月内容产出进度",
+      seed:[ {id:41,title:"本月短视频",current:8,target:12,unit:"条",note:"每周 3 条，已发 8 条"},
+             {id:42,title:"本月图文",current:5,target:10,unit:"篇",note:"小红书 + 公众号，每周 2-3 篇"} ] },
+    { key:"money", name:"收支记账", icon:"wallet", tint:"#f6efe8", color:"var(--module-4)", type:"finance", desc:"广告·打赏·佣金·成本",
+      categories:["广告收入","打赏","带货佣金","课程","设备","软件","推广","素材","其他"],
+      seed:[ {id:51,title:"品牌广告合作",type:"income",amount:2000,category:"广告收入",date:isoToday()},
+             {id:52,title:"视频号打赏",type:"income",amount:86,category:"打赏",date:isoToday()},
+             {id:53,title:"剪辑软件订阅",type:"expense",amount:99,category:"软件",date:isoToday()},
+             {id:54,title:"补光灯",type:"expense",amount:159,category:"设备",date:isoToday()} ] },
+    { key:"idea", name:"选题灵感", icon:"pen", tint:"#f1eef4", color:"var(--module-5)", type:"note", desc:"选题库·灵感·热点追踪",
+      moods:["待开发","已排期","已发布","弃用"],
+      seed:[ {id:61,title:"新手做自媒体的第一步",content:"很多人想做自媒体但不知道从哪开始，拆解从 0 到 1 的完整路径：定位→平台→选题→工具→变现。",mood:"待开发",date:isoToday()},
+             {id:62,title:"我花 3000 块买设备的血泪教训",content:"盘点做自媒体踩过的设备坑，哪些该买哪些不该买，手机+补光灯就能起步。",mood:"已排期",date:isoToday()} ] },
+    { key:"case", name:"爆款拆解", icon:"flame", tint:"#f6ece9", color:"var(--danger)", type:"note", desc:"拆解对标爆款·总结公式",
+      moods:["收藏","已拆解","可复用"],
+      seed:[ {id:71,title:"百万播放视频结构拆解",content:"开头 3 秒钩子：反问句+痛点；中段：步骤化干货；结尾：引导关注+评论区互动。可复用结构。",mood:"已拆解",date:isoToday()} ] },
   ],
 };
 
@@ -780,7 +786,7 @@ function overviewTileHTML(){
     <div class="ov2-body">
       <div class="rings">${rings}</div>
       <div class="ov2-side">
-        <div class="ov2-stat" data-open="note"><span class="s-ic" style="color:var(--module-2)">${icon("chart",17)}</span><div class="s-tx"><div class="s-v">${recCount}</div><div class="s-l">累计记录条数</div></div></div>
+        <div class="ov2-stat" data-open="idea"><span class="s-ic" style="color:var(--module-2)">${icon("chart",17)}</span><div class="s-tx"><div class="s-v">${recCount}</div><div class="s-l">累计记录条数</div></div></div>
         <div class="ov2-stat"><span class="s-ic" style="color:var(--module-3)">${icon("star",17)}</span><div class="s-tx"><div class="s-v">${pinCount}</div><div class="s-l">置顶要事</div></div></div>
         <div class="ov2-stat" data-open="money"><span class="s-ic" style="color:${balCol}">${icon("wallet",17)}</span><div class="s-tx"><div class="s-v" style="color:${balCol}">¥${bal}</div><div class="s-l">本月结余 · 收¥${inc} 支¥${exp}</div></div></div>
       </div>
@@ -860,28 +866,28 @@ function spendTileHTML(){
     <div class="book-list">${rows}</div></div>`;
 }
 
-/* 在读好书：read (progress) 各书进度 */
+/* 粉丝增长：fans (progress) 各平台进度 */
 function booksTileHTML(){
-  const all=data.read||[]; const colors=["var(--module-2)","var(--module-1)","var(--module-3)","var(--module-4)","var(--module-5)"];
+  const all=data.fans||[]; const colors=["var(--module-2)","var(--module-1)","var(--module-3)","var(--module-4)","var(--module-5)"];
   const rows=all.length? all.map((x,i)=>{ const pct=Math.min(100,Math.round((x.current/x.target)*100||0)); const col=colors[i%colors.length];
-    return `<div class="book-row js-open" data-open="read"><span class="spine" style="background:${col}">${icon("book",16)}</span>
-      <div class="bmid"><div class="btt">${esc(x.title)}</div><div class="bsub">${x.note?esc(x.note):`${x.current}/${x.target} ${x.unit||'页'}`}</div>
+    return `<div class="book-row js-open" data-open="fans"><span class="spine" style="background:${col}">${icon("target",16)}</span>
+      <div class="bmid"><div class="btt">${esc(x.title)}</div><div class="bsub">${x.note?esc(x.note):`${x.current}/${x.target} ${x.unit||'人'}`}</div>
         <div class="bbar"><i style="width:${pct}%;background:${col}"></i></div></div><span class="bpct" style="color:${col}">${pct}%</span></div>`; }).join("")
-    : `<div class="focus-empty">还没有在读书籍，去「阅读打卡」添加吧</div>`;
-  return `<div class="tile b4"><div class="tile-h"><span class="tic">${icon("book",16)}</span><div class="tt"><span class="en">CURRENTLY READING</span><span class="zh">在读好书</span></div><span class="r">${all.length} 本</span></div>
+    : `<div class="focus-empty">还没有粉丝目标，去「粉丝增长」添加吧</div>`;
+  return `<div class="tile b4"><div class="tile-h"><span class="tic">${icon("target",16)}</span><div class="tt"><span class="en">FOLLOWERS GROWTH</span><span class="zh">粉丝增长</span></div><span class="r">${all.length} 个平台</span></div>
     <div class="book-list">${rows}</div></div>`;
 }
 
-/* 本周目标：sport (progress) 各项进度条 */
+/* 内容产出：content (progress) 各项进度条 */
 function goalsTileHTML(){
-  const all=data.sport||[]; const colors=["var(--module-3)","var(--module-1)","var(--module-2)","var(--module-4)","var(--module-5)"];
+  const all=data.content||[]; const colors=["var(--module-3)","var(--module-1)","var(--module-2)","var(--module-4)","var(--module-5)"];
   const rows=all.length? all.map((x,i)=>{ const pct=Math.min(100,Math.round((x.current/x.target)*100||0)); const col=colors[i%colors.length];
-    return `<div class="book-row"><span class="spine" style="background:${col}">${icon("activity",16)}</span>
+    return `<div class="book-row"><span class="spine" style="background:${col}">${icon("camera",16)}</span>
       <div class="bmid"><div class="btt">${pct>=100?`<span style="color:var(--module-1);display:inline-flex;vertical-align:-2px;margin-right:3px">${icon("check",13,2.6)}</span>`:''}${esc(x.title)}</div>
-        <div class="bsub">${x.current}/${x.target} ${x.unit||'次'}</div>
+        <div class="bsub">${x.current}/${x.target} ${x.unit||'条'}</div>
         <div class="bbar"><i style="width:${pct}%;background:${col}"></i></div></div><span class="bpct" style="color:${col}">${pct}%</span></div>`; }).join("")
-    : `<div class="focus-empty">还没有锻炼目标，去「每日锻炼」添加吧</div>`;
-  return `<div class="tile b4"><div class="tile-h"><span class="tic">${icon("activity",16)}</span><div class="tt"><span class="en">WEEKLY GOALS</span><span class="zh">本周目标</span></div><span class="r js-open" data-open="sport">${all.length} 项</span></div>
+    : `<div class="focus-empty">还没有内容目标，去「内容产出」添加吧</div>`;
+  return `<div class="tile b4"><div class="tile-h"><span class="tic">${icon("camera",16)}</span><div class="tt"><span class="en">CONTENT OUTPUT</span><span class="zh">内容产出</span></div><span class="r js-open" data-open="content">${all.length} 项</span></div>
     <div class="book-list">${rows}</div></div>`;
 }
 

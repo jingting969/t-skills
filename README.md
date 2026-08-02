@@ -17,19 +17,19 @@
 #### Claude Code
 
 ```
-claude plugin marketplace add <your-github-username>/t-skills
+claude plugin marketplace add jingting969/t-skills
 claude plugin install t-skills
 ```
 
 #### 通用安装方式（适用于 Codex / Claude Code）
 
 ```
-npx -y skills add <your-github-username>/t-skills -g --all
+npx -y skills add jingting969/t-skills -g --all
 ```
 
 #### Trae Solo
 
-从 [GitHub Releases](https://github.com/<your-github-username>/t-skills/releases) 下载最新的 `t-skills-版本号.zip`，解压后里面是独立的 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
+从 [GitHub Releases](https://github.com/jingting969/t-skills/releases) 下载最新的 `t-skills-版本号.zip`，解压后里面是独立的 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
 
 如果想本地构建，运行 `bash tools/build-skills.sh`，产物在 `dist/skills/`。
 

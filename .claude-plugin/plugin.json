@@ -5,6 +5,7 @@
   "skills": [
     "./skills/t-game-thinking",
     "./skills/t-handoff",
-    "./skills/t-productize-you"
+    "./skills/t-productize-you",
+    "./skills/t-wechat-rewrite"
   ]
 }

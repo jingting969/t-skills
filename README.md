@@ -61,6 +61,7 @@ npx -y skills add jingting969/t-skills -g --all
 | --- | --- | --- |
 | `t-handoff` | 对话交接。把当前对话压缩成交接文档，让另一个 agent 无缝接手继续工作 | `Use Skill: t-handoff` |
 | `t-productize-you` | 能力产品化。把经历和能力转成可试卖的咨询、课程、陪跑产品，含三级定价和销售验证方案 | `Use Skill: t-productize-you` |
+| `t-url-to-feishu-doc` | URL → 飞书 wiki。把任意公开 URL 抓取并提取为干净 Markdown，作为子文档写入指定的飞书 wiki 父节点 | `Use Skill: t-url-to-feishu-doc` |
 | `t-wechat-rewrite` | 转述型公众号长文写作。把任意原文（文章、书摘、播客逐字稿等）转成3000字以上的公众号长文，支持4种文章结构 | `Use Skill: t-wechat-rewrite` |
 
 ### 技能之间的关系

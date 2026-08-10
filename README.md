@@ -106,11 +106,20 @@ claude plugin install t-skills@t-skills
 
 装完重启 Claude Code，输入 `Use Skill: t-...` 即可。
 
-### 方式 2：通用方式（适用于所有支持 skills 协议的 agent，含 Codex / Claude Code / Cursor / Trae / Gemini CLI / OpenCode / Windsurf 等）
+### 方式 2：一键安装到所有 agent（推荐，跨平台通用）
 
 ```bash
-npx -y skills add jingting969/t-skills -g --all
+curl -fsSL https://raw.githubusercontent.com/jingting969/t-skills/main/tools/install.sh | bash
 ```
+
+**这会做什么**：
+- 把所有 skill 实体装到 `~/.agents/skills/`（agent skills 通用目录）
+- 自动给 Claude Code / Codex / Cursor / OpenCode / Windsurf / Gemini CLI 建软链，全部指向 `~/.agents/skills/`
+- 也就是说：**装一次，所有 agent 都能用**
+
+**支持自定义**：
+- 改实体目录：`SKILLS_DIR=~/my-skills bash <(curl ...)`
+- 改源仓库：`T_SKILLS_REPO=fork/your-fork bash <(curl ...)`
 
 ### 方式 3：Trae Solo
 
@@ -121,7 +130,7 @@ npx -y skills add jingting969/t-skills -g --all
 ### 怎么更新？
 
 - **Claude Code 用户**：`claude plugin update t-skills@t-skills`，然后 `/reload-plugins`
-- **npx 用户**：再跑一次同样的命令即可
+- **npx / 方式 2 用户**：再跑一次同样的命令即可（同名同目录会自动覆盖）
 
 ---
 
@@ -148,7 +157,8 @@ t-skills/
 │   ├── t-url-to-feishu-doc/     # URL → 飞书 wiki
 │   └── t-wechat-rewrite/        # 转述型公众号写作
 ├── tools/
-│   └── build-skills.sh          # 构建打包脚本
+│   ├── build-skills.sh          # 构建打包脚本
+│   └── install.sh               # 一键安装到 ~/.agents/skills/ + 全 agent 软链
 ├── .gitignore
 ├── LICENSE                      # CC BY-NC 4.0
 ├── README.md

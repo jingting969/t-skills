@@ -106,7 +106,7 @@ claude plugin install t-skills
 
 装完重启 Claude Code，输入 `Use Skill: t-...` 即可。
 
-### 方式 2：通用方式（适用于 Codex / Claude Code / Cursor）
+### 方式 2：通用方式（适用于所有支持 skills 协议的 agent，含 Codex / Claude Code / Cursor / Trae / Gemini CLI / OpenCode / Windsurf 等）
 
 ```bash
 npx -y skills add jingting969/t-skills -g --all

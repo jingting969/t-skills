@@ -123,7 +123,24 @@ npx -y skills add jingting969/t-skills --all
 - `-a <agent>`：只装到指定 agent
 - `--copy`：复制文件而不是建软链
 
-### 方式 3：Trae Solo
+### 方式 3：不依赖 Node.js 的安装脚本（git clone 实现）
+
+如果你机器上没有 Node.js / npx，或者想完全看清安装流程：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jingting969/t-skills/main/tools/install.sh | bash
+```
+
+**这会做什么**：
+- `git clone` 仓库到临时目录，把 5 个 skill 实体搬到 `~/.agents/skills/`
+- 给 6 个主流 agent 建软链（Claude Code / Codex / Cursor / OpenCode / Windsurf / Gemini CLI）
+- 只依赖 `git`（macOS / Linux 默认都装了）
+
+**支持自定义**：
+- 改实体目录：`SKILLS_DIR=~/my-skills bash <(curl ...)`
+- 改源仓库：`T_SKILLS_REPO=fork/your-fork bash <(curl ...)`
+
+### 方式 4：Trae Solo
 
 从 [GitHub Releases](https://github.com/jingting969/t-skills/releases) 下载最新的 `t-skills-版本号.zip`，解压后里面是独立的 skill zip（每个 zip 解压后根级是 `SKILL.md`），逐个拖进 Trae Solo 的「上传技能」窗口即可。
 
@@ -133,6 +150,7 @@ npx -y skills add jingting969/t-skills --all
 
 - **Claude Code 用户**：`claude plugin update t-skills@t-skills`，然后 `/reload-plugins`
 - **方式 2 用户**：再跑一次 `npx -y skills add jingting969/t-skills --all` 即可
+- **方式 3 用户**：再跑一次 `curl ... | bash` 即可（链接会自动刷新）
 
 ---
 
@@ -159,7 +177,8 @@ t-skills/
 │   ├── t-url-to-feishu-doc/     # URL → 飞书 wiki
 │   └── t-wechat-rewrite/        # 转述型公众号写作
 ├── tools/
-│   └── build-skills.sh          # 构建打包脚本
+│   ├── build-skills.sh          # 构建打包脚本
+│   └── install.sh               # curl|bash 安装脚本（git clone，不依赖 npx）
 ├── .gitignore
 ├── LICENSE                      # CC BY-NC 4.0
 ├── README.md

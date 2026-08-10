@@ -23,6 +23,12 @@ group_for() {
       echo "思维工具" ;;
     t-handoff)
       echo "工具" ;;
+    t-productize-you)
+      echo "工具" ;;
+    t-url-to-feishu-doc)
+      echo "工具" ;;
+    t-wechat-rewrite)
+      echo "工具" ;;
     *)
       echo "未分组" ;;
   esac
@@ -43,7 +49,7 @@ build_one() {
   cp "$skill_dir/SKILL.md" "$stage_dir/SKILL.md"
 
   # 复制可选子目录
-  for subdir in templates scaffold docs tools scripts; do
+  for subdir in templates scaffold docs tools scripts references; do
     if [ -d "$skill_dir/$subdir" ]; then
       mkdir -p "$stage_dir/$subdir"
       cp -R "$skill_dir/$subdir/." "$stage_dir/$subdir/"

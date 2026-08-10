@@ -6,6 +6,7 @@
     "./skills/t-game-thinking",
     "./skills/t-handoff",
     "./skills/t-productize-you",
+    "./skills/t-url-to-feishu-doc",
     "./skills/t-wechat-rewrite"
   ]
 }

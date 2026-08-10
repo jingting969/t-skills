@@ -1,7 +1,7 @@
 {
   "name": "t-skills",
-  "displayName": "t-skills",
-  "description": "t-skills 个人成长技能箱。服务于创业、思考、人生成长、自媒体创作等真实场景，用博弈论、决策科学等框架帮你做出更优决策。",
+  "displayName": "t-skills 个人成长技能箱",
+  "description": "净霆的个人成长技能箱。包含 5 个独立 Skill：博弈思考、能力产品化、公众号写作、URL→飞书 wiki、对话交接。",
   "skills": [
     "./skills/t-game-thinking",
     "./skills/t-handoff",

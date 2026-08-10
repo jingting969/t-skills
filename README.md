@@ -101,7 +101,7 @@
 
 ```bash
 claude plugin marketplace add jingting969/t-skills
-claude plugin install t-skills
+claude plugin install t-skills@t-skills
 ```
 
 装完重启 Claude Code，输入 `Use Skill: t-...` 即可。
@@ -120,7 +120,7 @@ npx -y skills add jingting969/t-skills -g --all
 
 ### 怎么更新？
 
-- **Claude Code 用户**：`claude plugin update t-skills`，然后 `/reload-plugins`
+- **Claude Code 用户**：`claude plugin update t-skills@t-skills`，然后 `/reload-plugins`
 - **npx 用户**：再跑一次同样的命令即可
 
 ---

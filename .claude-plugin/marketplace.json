@@ -1,0 +1,57 @@
+{
+  "name": "t-skills",
+  "owner": {
+    "name": "jingting969"
+  },
+  "metadata": {
+    "description": "净霆的个人成长技能箱。包含 5 个独立可用的 Skill，覆盖博弈思考、能力产品化、公众号写作、URL→飞书 wiki、对话交接。",
+    "version": "1.1.0"
+  },
+  "plugins": [
+    {
+      "name": "t-game-thinking",
+      "description": "博弈思考助手。用博弈论框架拆解冲突、谈判、竞争与决策场景。不适用于与挚爱至亲的日常相处。",
+      "source": "./skills/t-game-thinking",
+      "strict": true,
+      "version": "1.1.0",
+      "category": "thinking-tools",
+      "keywords": ["game-theory", "decision", "negotiation", "conflict", "chinese"]
+    },
+    {
+      "name": "t-handoff",
+      "description": "对话交接。把当前对话压缩成交接文档，让另一个 agent 无缝接手继续工作。",
+      "source": "./skills/t-handoff",
+      "strict": true,
+      "version": "1.1.0",
+      "category": "workflow-infrastructure",
+      "keywords": ["handoff", "session", "context", "agent", "chinese"]
+    },
+    {
+      "name": "t-productize-you",
+      "description": "能力产品化。从证据出发，把经历和能力转成可试卖的咨询、课程、陪跑产品。",
+      "source": "./skills/t-productize-you",
+      "strict": true,
+      "version": "1.1.0",
+      "category": "business-diagnostics",
+      "keywords": ["productize", "monetize", "consulting", "course", "chinese"]
+    },
+    {
+      "name": "t-url-to-feishu-doc",
+      "description": "URL → 飞书 wiki。把任意公开 URL 抓取并提取为干净 Markdown，作为子文档写入飞书 wiki 父节点。",
+      "source": "./skills/t-url-to-feishu-doc",
+      "strict": true,
+      "version": "1.1.0",
+      "category": "workflow-infrastructure",
+      "keywords": ["feishu", "lark", "wiki", "url", "markdown", "chinese"]
+    },
+    {
+      "name": "t-wechat-rewrite",
+      "description": "转述型公众号长文写作。把任意原文（文章、书摘、播客逐字稿）转成 3000 字以上的公众号长文。",
+      "source": "./skills/t-wechat-rewrite",
+      "strict": true,
+      "version": "1.1.0",
+      "category": "content-creation",
+      "keywords": ["wechat", "official-account", "writing", "rewrite", "chinese"]
+    }
+  ]
+}

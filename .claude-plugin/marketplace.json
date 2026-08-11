@@ -46,7 +46,7 @@
     },
     {
       "name": "t-wechat-video-download",
-      "description": "微信视频号下载的使用指引（不复制上游代码）。指向 redfox-data/redfox-community 的 wechat-video-downloader。",
+      "description": "微信视频号视频下载（fork 自 redfox-data/redfox-community，未获明确 LICENSE 许可）。安装前请阅读 skills/t-wechat-video-download/README.md 的来源声明。",
       "source": "./skills/t-wechat-video-download",
       "strict": true,
       "version": "1.1.0",

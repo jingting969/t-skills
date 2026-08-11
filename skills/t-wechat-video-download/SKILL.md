@@ -1,83 +1,57 @@
 ---
 name: t-wechat-video-download
-description: |
-  微信视频号视频下载的使用指引。本 skill 不自带可执行代码——它告诉用户如何安装上游的 redfox-data/redfox-community 仓库的 wechat-video-downloader skill、如何获取 redfox.hk API Key、如何完成配置。当用户说「视频号下载」「wechat 视频号」「视频号无水印下载」时触发。
+description: "一键解析视频号视频的真实下载地址。粘贴视频号分享链接，即可获取视频标题、封面图和高清无水印下载地址。触发词：当用户提到'解析视频号'、'视频号下载地址'、'视频号下载'、'视频号无水印下载'时使用"
 ---
 
-# t-wechat-video-download
+# 视频号视频下载
 
-## 这是什么
+## 简介
 
-这是一个**使用指引型** skill，不包含可执行代码。它的作用是：把"微信视频号视频下载"这件事拆成"装上游 skill + 拿 API Key + 配上环境变量"三步，告诉您怎么做。
+粘贴一条视频号分享链接，直接拿到视频的真实下载地址。返回视频标题、封面图和高清无水印视频地址。
 
-## 为什么是「指引」而不是 fork
+适合做内容二创的博主下载素材、运营人员保存竞品视频、剪辑师快速获取源文件。
 
-视频下载能力来自 [redfox-data/redfox-community](https://github.com/redfox-data/redfox-community) 仓库的 `wechat-video-downloader` skill，由 redfox-data 团队开发维护。
+## 功能特性
 
-该上游仓库**未提供明确的 LICENSE 文件**（截至本 skill 创建时）。在 LICENSE 明确之前，把上游代码按本仓库的 CC BY-NC 4.0 协议再分发存在法律不确定性。所以本 skill 选择**只做指引，不复制代码**。
+- **真实地址解析**：拿到的是视频直链，可直接下载或浏览器打开
+- **附带元信息**：视频标题 + 封面图一并返回，方便归档管理
+- **同步返回**：无需等待，一次调用即出结果
 
-## 三步上手
+## 使用指南
 
-### 1. 装上游 skill
+### 鉴权
 
-```bash
-npx skills add redfox-data/redfox-community --skill wechat-video-downloader
-```
+前往 [红狐hub](https://redfox.hk/settings/api-keys?source=github) 获取 API KEY
 
-装上之后，您机器上的 `~/.agents/skills/wechat-video-downloader/` 会有 skill 文件。Claude Code / Codex / Cursor / Gemini CLI 等支持 skills 协议的 agent 都能识别。
+配置方式：
+1. 设置环境变量 `REDFOX_API_KEY`
+2. 或在 `~/.openclaw/openclaw.json` 中配置
 
-### 2. 拿 API Key
+### 快速开始
 
-视频解析需要 redfox.hk 的 API：
+1. 打开微信，找到想下载的视频号视频
+2. 点击视频右下角的 **【分享】** 按钮
+3. 选择 **复制链接**，粘贴到输入框提交即可
 
-1. 打开 [https://redfox.hk/settings/api-keys?source=github](https://redfox.hk/settings/api-keys?source=github)
-2. 注册 / 登录
-3. 创建 API Key（新用户约 10000 次免费额度）
+💡 **小贴士**：可以一次性提交多个链接，用空格隔开就行
 
-### 3. 配 API Key
+### 视频号链接获取方式
 
-**方式 A：环境变量**（推荐）
+1. 打开微信 → 视频号 → 找到目标视频
+2. 点击视频右下角 **「分享」** 按钮
+3. 选择 **「复制链接」**
 
-```bash
-export REDFOX_API_KEY='ak_您的Key'
-```
+支持的链接格式：
+- `https://weixin.qq.com/sph/xxxxxx`
 
-放到 `~/.zshrc` 或 `~/.bashrc` 让所有新 shell 自动加载。
+## 常见问答
 
-**方式 B：配置文件**（持久化）
+**Q：下载地址有水印吗？**
+A：解析出的是原始视频直链，无水印。
 
-写到 `~/.openclaw/openclaw.json`：
+**Q：链接有效期吗？**
+A：解析出的视频地址为临时链接，建议及时下载保存。
 
-```json
-{
-  "redfox_api_key": "ak_您的Key"
-}
-```
+---
 
-**方式 C：macOS Keychain**（最安全）
-
-```bash
-security add-generic-password -a redfox_api_key -s redfox -w 'ak_您的Key'
-```
-
-Key 只在 Keychain 加密存储，shell history / 配置文件都看不到。
-
-## 用法
-
-安装并配置完成后，粘贴视频号分享链接给 agent：
-
-```
-Use Skill: wechat-video-downloader
-https://weixin.qq.com/sph/xxxxxx
-```
-
-支持的链接格式：`https://weixin.qq.com/sph/xxxxxx`
-
-## 不适用
-
-- 不是视频号平台（抖音/小红书/B 站/快手）：需要装上游仓库对应的 `video-downloader` 或 `xiaohongshu-video-downloader` 等其他 skill
-- 没有 redfox.hk API Key：跑不通，会报「未配置 API Key」
-
-## 致谢
-
-视频下载能力由 [redfox-data](https://github.com/redfox-data) 团队的 [redfox-community](https://github.com/redfox-data/redfox-community) 仓库提供。本仓库仅做集成指引，未修改或分发上游代码。
+> 核心执行流程、接口详情与输出格式详见 `references/core_workflow.md`

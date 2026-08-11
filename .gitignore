@@ -7,3 +7,8 @@ __pycache__/
 .obsidian/
 tests/
 workbench-desktop.html
+
+# npx skills add 项目级缓存（不进入仓库）
+.claude/
+skills-lock.json
+skills/wechat-video-downloader

@@ -67,6 +67,7 @@
 | --- | --- | --- |
 | `t-wechat-rewrite` | 转述型公众号长文写作。把任意原文（文章、书摘、播客逐字稿）转成 3000 字以上的公众号长文 | `Use Skill: t-wechat-rewrite` |
 | `t-url-to-feishu-doc` | URL → 飞书 wiki。把任意公开 URL 抓取并提取为干净 Markdown，作为子文档写入飞书 wiki 父节点 | `Use Skill: t-url-to-feishu-doc` |
+| `t-wechat-video-download` | 微信视频号下载**使用指引**（不复制上游代码）。告诉你怎么装上游 wechat-video-downloader + 拿 redfox.hk API Key | `Use Skill: t-wechat-video-download` |
 
 ### 跨会话协作
 

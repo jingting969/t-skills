@@ -27,6 +27,8 @@ group_for() {
       echo "工具" ;;
     t-url-to-feishu-doc)
       echo "工具" ;;
+    t-wechat-video-download)
+      echo "工具" ;;
     t-wechat-rewrite)
       echo "工具" ;;
     *)

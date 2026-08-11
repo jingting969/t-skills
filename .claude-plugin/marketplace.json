@@ -4,7 +4,7 @@
     "name": "jingting969"
   },
   "metadata": {
-    "description": "净霆的个人成长技能箱。包含 5 个独立可用的 Skill，覆盖博弈思考、能力产品化、公众号写作、URL→飞书 wiki、对话交接。",
+    "description": "净霆的个人成长技能箱。包含 6 个独立可用的 Skill，覆盖博弈思考、能力产品化、公众号写作、微信视频号下载指引、URL→飞书 wiki、对话交接。",
     "version": "1.1.0"
   },
   "plugins": [
@@ -43,6 +43,15 @@
       "version": "1.1.0",
       "category": "workflow-infrastructure",
       "keywords": ["feishu", "lark", "wiki", "url", "markdown", "chinese"]
+    },
+    {
+      "name": "t-wechat-video-download",
+      "description": "微信视频号下载的使用指引（不复制上游代码）。指向 redfox-data/redfox-community 的 wechat-video-downloader。",
+      "source": "./skills/t-wechat-video-download",
+      "strict": true,
+      "version": "1.1.0",
+      "category": "workflow-infrastructure",
+      "keywords": ["wechat", "video", "download", "redfox", "chinese"]
     },
     {
       "name": "t-wechat-rewrite",
